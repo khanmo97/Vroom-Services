@@ -24,6 +24,7 @@ firebase.initializeApp(firebaseConfig);
 import Signup from "./Screens/Signup";
 import Login from "./Screens/Login";
 import Home from "./Screens/Home";
+import Service from "./Screens/Service";
 import {NavigationContainer} from "@react-navigation/native";
 // import Otp from "./components/Phone/Otp";
 
@@ -44,6 +45,12 @@ export default function App() {
 					component={Signup}
 					options={{title: 'Signup'}}
 					backgroundColor = '#003f5c'
+				/>
+				<Stack.Screen
+					name="Service"
+					component={Service}
+					options={{title: 'Service'}}
+					backgroundColor = 'Teal'
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

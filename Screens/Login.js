@@ -12,7 +12,7 @@ export default class Login extends React.Component {
 			.signInWithEmailAndPassword(email, password)
 			.then(() => {
 				// AsyncStorage.setItem("key", "I like to save it.");
-				this.props.navigation.navigate("Home");
+				this.props.navigation.navigate("Service");
 			})
 			.catch(error => this.setState({ errorMessage: error.message }));
 	};
@@ -40,7 +40,7 @@ export default class Login extends React.Component {
 				<Button title="Login" onPress={this.handleLogin} />
 				<Button
 					title="Don't have an account? Sign Up"
-					onPress={() => this.props.navigation.navigate("SignUp")}
+					onPress={() => this.props.navigation.navigate("Signup")}
 				/>
 			</View>
 		);
