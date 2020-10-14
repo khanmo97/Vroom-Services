@@ -7,6 +7,8 @@ import {
 } from "@react-navigation/stack";
 
 import * as firebase from "firebase";
+import "firebase/firestore";
+
 var firebaseConfig = {
     apiKey: "AIzaSyBLJ-dDm-yr9YouJny1tf7F5Z4CTgrtgsA",
     authDomain: "vroomwash-f6735.firebaseapp.com",
@@ -18,6 +20,9 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+// define the firestore database
+const dbh = firebase.firestore();
 
 // import the different screens
 //import Loading from "./components/Loading";
