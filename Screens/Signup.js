@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import * as firebase from "firebase";
+import "firebase/firestore";
 import { AsyncStorage } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { Checkbox, Switch } from "react-native-paper";
@@ -10,7 +11,7 @@ export default class SignUp extends React.Component {
         email: "",
         password: "",
         isBusiness: false,
-        BusinessName: "",
+        businessName: "",
         errorMessage: null,
     };
 
@@ -27,16 +28,33 @@ export default class SignUp extends React.Component {
     }
 
     handleSignUp = () => {
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(
-                this.state.email,
-                this.state.password
-            )
-            .then(() => this.props.navigation.navigate("Main"))
-            .catch((error) => this.setState({ errorMessage: error.message }));
+        // Check if business switch is toggled and no business name is given.
+        // Return error if that is the case
+        if (this.state.isBusiness == true && this.state.businessName === "") {
+            this.setState({ errorMessage: "Business name missing" });
+        } else {
+            // create a user with email and password input
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                    this.state.email,
+                    this.state.password
+                )
+                .then(() => this.props.navigation.navigate("Login"))
+                .catch((error) =>
+                    this.setState({ errorMessage: error.message })
+                );
+            // If registering as a business add to firestore database
+            if (this.state.isBusiness && this.state.BusinessName != "") {
+                firebase.firestore().collection("businesses").add({
+                    UID: firebase.auth().currentUser.uid,
+                    BusinessName: this.state.businessName,
+                });
+            }
+        }
     };
     render() {
+        //define text box for business name input for conditional rendering
         const businessBox = (
             <TextInput
                 placeholder="Business Name"
@@ -69,6 +87,7 @@ export default class SignUp extends React.Component {
                     onChangeText={(password) => this.setState({ password })}
                     value={this.state.password}
                 />
+
                 <View
                     style={{
                         flexDirection: "row",
