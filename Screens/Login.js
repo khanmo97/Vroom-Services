@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TextInput, View, Button, ImageBackground } from "react-native";
 import * as firebase from "firebase";
 import { AsyncStorage } from "react-native";
+import Profile from "./Profile";
 
 export default class Login extends React.Component {
 	state = { email: "", password: "", errorMessage: null };
@@ -12,7 +13,7 @@ export default class Login extends React.Component {
 			.signInWithEmailAndPassword(email, password)
 			.then(() => {
 				// AsyncStorage.setItem("key", "I like to save it.");
-				this.props.navigation.navigate("Profile");
+				console.log("wtf is loging")
 			})
 			.catch(error => this.setState({ errorMessage: error.message }));
 	};
@@ -40,7 +41,7 @@ export default class Login extends React.Component {
 				<Button title="Login" onPress={this.handleLogin} />
 				<Button
 					title="Don't have an account? Sign Up"
-					onPress={() => this.props.navigation.navigate("Profile")}
+					onPress={() => this.props.navigation.navigate("Signup")}
 				/>
 			</View>
 		);

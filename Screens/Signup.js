@@ -4,7 +4,7 @@ import * as firebase from "firebase";
 import { AsyncStorage } from "react-native";
 
 export default class SignUp extends React.Component {
-	state = { email: "", password: "", errorMessage: null };
+	state = { name: "", email: "", phone: "", password: "", errorMessage: null };
 	componentDidMount() {
 		//1.
 		// const value=AsyncStorage.gettItem("key");
@@ -17,12 +17,21 @@ export default class SignUp extends React.Component {
 		// });
 	}
 
-	handleSignUp = () => {
-		firebase
-			.auth()
-			.createUserWithEmailAndPassword(this.state.email, this.state.password)
-			.then(() => this.props.navigation.navigate("Main"))
-			.catch(error => this.setState({ errorMessage: error.message }));
+	handleSignUp = async () => {
+		const { email, password, name, phone} = this.state;
+		//const navigateHome = () => this.props.navigation.navigate("Home");
+		await firebase.auth().createUserWithEmailAndPassword(email, password);
+		try {
+			await firebase.firestore().collection("users")
+				.doc(firebase.auth().currentUser.uid)
+				.set({
+					name,
+					email,
+					phone
+				});
+		} catch (e) {
+			this.setState({ errorMessage: e.message })
+		}
 	};
 	render() {
 		return (
@@ -31,6 +40,15 @@ export default class SignUp extends React.Component {
 				{this.state.errorMessage && (
 					<Text style={{ color: "red" }}>{this.state.errorMessage}</Text>
 				)}
+				<TextInput
+					placeholder="Name"
+					style={styles.textInput}
+					onChangeText={name => this.setState({ name })}
+				/><TextInput
+					placeholder="Phone Number"
+					style={styles.textInput}
+					onChangeText={phone => this.setState({ phone })}
+				/>
 				<TextInput
 					placeholder="Email"
 					autoCapitalize="none"
