@@ -21,9 +21,6 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// define the firestore database
-const dbh = firebase.firestore();
-
 // import the different screens
 //import Loading from "./components/Loading";
 import Signup from "./Screens/Signup";
