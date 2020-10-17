@@ -18,7 +18,6 @@ export default class SignUp extends React.Component {
         location: null,
         errorMessage: null,
     };
-
     componentDidMount() {
         //1.
         // const value=AsyncStorage.gettItem("key");

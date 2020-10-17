@@ -122,11 +122,11 @@ export default function App() {
     return (
         <NavigationContainer>
             <Drawer.Navigator initialRouteName="Home">
-                <Drawer.Screen name="Home" component={HomeStackScreen} />
+                {/* <Drawer.Screen name="Home" component={HomeStackScreen} /> */}
+                <Drawer.Screen name="Signup" component={SignupStackScreen} />
                 <Drawer.Screen name="Login" component={LoginStackScreen} />
                 <Drawer.Screen name="Profile" component={ProfileStackScreen} />
                 <Drawer.Screen name="Service" component={ServiceStackScreen} />
-                <Drawer.Screen name="Signup" component={SignupStackScreen} />
             </Drawer.Navigator>
         </NavigationContainer>
     );
