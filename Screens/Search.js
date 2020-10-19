@@ -5,10 +5,16 @@ import {Colors, IconButton} from "react-native-paper";
 
 import firebase from 'firebase';
 import Carousel from "./Carousel";
+//importing the carousel container here to use it to display services on search
+//this file is still in development
 
 require('firebase/firestore');
+//need fire base for pulling data
 
 export default function Search() {
+	//this function is still in production and test mode
+	//will retreive all the services posted by ALL users
+
 	const [users, setUsers] = useState([]);
 	const [services, setServices] = useState([]);
 
@@ -63,11 +69,12 @@ export default function Search() {
 		// 	<View style={styles.child1}></View>
 		// 	<View style={styles.child2}></View>
 		// </View>
+		// onSubmitEditing={(search) => fetchServices(search)}
 		<ScrollView style={styles.parent}>
 			<View style={styles.child1}>
 				<View style={styles.searchBar}>
 					<IconButton icon="magnify"/>
-					<TextInput placeholder="Search" style={styles.textInput} onSubmitEditing={(search) => fetchServices(search)}/>
+					<TextInput placeholder="Search" style={styles.textInput}/>
 				</View>
 			</View>
 			<View style={styles.child2}>
