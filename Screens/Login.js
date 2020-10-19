@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View, Button, ImageBackground } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    Button,
+    ImageBackground,
+} from "react-native";
 import * as firebase from "firebase";
 import { AsyncStorage } from "react-native";
 import Profile from "./Profile";

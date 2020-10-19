@@ -46,14 +46,16 @@ export default class Home extends React.Component {
 		return () => {this.isMounted = false};
 	}
 
-	_getLocation = async ()=> {
-		let {status} = await Permissions.askAsync(Permissions.LOCATION);
+    // get device permissions to get device location
+    // save location
+    _getLocation = async () => {
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
-		if (status !== 'granted'){
-			this.setState({
-				errorMessage: 'Permission Not Granted'
-			});
-		}
+        if (status !== "granted") {
+            this.setState({
+                errorMessage: "Permission Not Granted",
+            });
+        }
 
 		let location = await Location.getCurrentPositionAsync({});
 
