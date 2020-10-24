@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { View, TextInput, Image, Button } from 'react-native';
 import firebase from 'firebase';
 import {Colors, IconButton} from "react-native-paper";
+import NumberFormat from 'react-number-format';
 
 require("firebase/firestore");
 require("firebase/firebase-storage")
@@ -11,6 +12,8 @@ export default function SaveServiceImages( props) {
 	const [description, setDescription ] = useState("");
 	const [serviceName, setServiceName] = useState("");
 	const [title, setTitle] = useState("");
+	var NumberFormat = require('react-number-format');
+
 	// let servicesOffered = firebase.firestore().collection('Services').get()
 	// 	.then(snapshot => {
 	// 		snapshot

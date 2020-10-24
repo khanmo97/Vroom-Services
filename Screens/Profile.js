@@ -13,6 +13,15 @@ import { connect } from "react-redux";
 import Carousel from "./Carousel";
 import * as firebase from "firebase";
 
+function serviceView(services) {
+	if (services) {
+		return <Text style={{alignSelf: 'center'}}>No services posted yet.</Text>
+	}
+	else {
+		return <Carousel data={services}/>
+	}
+}
+
 function ProfileScreen(props) {
 	const { currentUser, services} = props;
 	console.log("See if the profile has the current user and its servicess")
@@ -80,7 +89,7 @@ function ProfileScreen(props) {
 				</View>
 				<View>
 					<View>
-						<Carousel data={services}/>
+						{serviceView(services)}
 					</View>
 				</View>
 			</View>

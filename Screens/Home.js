@@ -5,24 +5,6 @@ import * as Location from 'expo-location';
 import * as Constants from 'expo';
 import * as firebase from "firebase";
 
-
-const fetchServices = async (search) => {
-	const myReviews = firebase.firestore().collectionGroup('serviceName');
-	const snapshot = await myReviews.get();
-	let services = snapshot.docs.map(doc => {
-		console.log(doc.data().title);
-		const data = doc.data();
-		const id = doc.id;
-		return {id, ...data};
-	});
-	console.log("here are ALL THE FING SERVICES")
-	console.log(services)
-	setServices(services);
-};
-
-const [services, setServices] = useState([]);
-
-
 export default class Home extends React.Component {
 
 

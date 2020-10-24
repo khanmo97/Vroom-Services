@@ -3,11 +3,13 @@ import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { AsyncStorage } from "react-native";
-import { CheckBox } from "react-native-elements";
 import { Checkbox, Switch } from "react-native-paper";
+import Geocoder from 'react-native-geocoding';
 
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
+
+let apiKey = 'AIzaSyDluMF-kVg_RE8Vdu5UJLuFJvOpLENFa3U'
 
 export default class SignUp extends React.Component {
     state = {
@@ -20,6 +22,7 @@ export default class SignUp extends React.Component {
         location: null,
         errorMessage: null,
     };
+
     componentDidMount() {
         //1.
         // const value=AsyncStorage.gettItem("key");
@@ -37,62 +40,85 @@ export default class SignUp extends React.Component {
         // Get users location
         this.getLocation();
     }
+    componentWillUnmount() {
 
-    handleSignUp = async () => {
+	}
+	getData(location)
+	{
+		Geocoder.setApiKey(apiKey);
+		Geocoder.getFromLatLng(location.latitude, location.longitude).then(
+			json => {
+				var address_component = json.result[0].address_components[0];
+				alert(address_component.long_name);
+			},
+			error => {
+				alert(error);
+			}
+		)
+	}
+
+	handleSignUp = async () => {
 		// Check if business switch is toggled and no business name/location is given.
         // Return error if that is the case
-        if (
-            this.state.isBusiness == true &&
-            (this.state.businessName === "" || this.state.location == null)
-        ) {
+        const { email, password, phone, name, businessName, location, isBusiness} = this.state;
+		if (isBusiness === true && (isBusiness === "" || location == null))
+		{
             this.setState({ errorMessage: "Business information missing" });
-        } else {
+        }
+		else {
             // create a user with email and password input
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(
-                    this.state.email,
-                    this.state.password
+                    email, password
                 )
                 .then(() => {
                     // If registering as a business add to business document in firestore database
-                    if (this.state.isBusiness) {
-                        firebase.firestore().collection("businesses").add({
-                            UID: firebase.auth().currentUser.uid,
-                            BusinessName: this.state.businessName,
-                            Location: this.state.location,
-							Name: this.state.name,
-							Phone: this.state.phone
-                        });
-                    }
-                    else
-					{
-						const { email, password, name, phone} = this.state;
+                    if (isBusiness) {
 						try {
-							await firebase.firestore().collection("users")
+							 firebase.firestore().collection("businesses")
 								.doc(firebase.auth().currentUser.uid)
 								.set({
 									name,
 									email,
-									phone
+									phone,
+									location,
+									businessName,
 								});
 						} catch (e) {
 							this.setState({ errorMessage: e.message })
 						}
+                    }
+                    else
+					{
+						try {
+							 firebase.firestore().collection("users")
+								.doc(firebase.auth().currentUser.uid)
+								.set({
+									name,
+									email,
+									phone,
+									location
+								});
+							//  console.log(location.latitude);
+							// fetch('https://maps.googleapis.com/maps/AIzaSyDluMF-kVg_RE8Vdu5UJLuFJvOpLENFa3U/geocode/json?address=' + location.latitude + ',' + location.longitude + '&key=' + apiKey)
+							// 	.then((response) => response.text())
+							// 	.then((responseJson) => {
+							// 		console.log('ADDRESS GEOCODE is BACK!! => ' + JSON.stringify(responseJson));
+							// 		this.getData(location)
+							// 	})
+						} catch (e) {
+							this.setState({ errorMessage: e.message })
+						}
 					}
-                })
-                .then(() => {
-                    this.props.navigation.navigate("Profile");
-                })
-                .catch((error) =>
-                    this.setState({ errorMessage: error.message })
-                );
+                });
         }
     };
 
     getLocation = async () => {
         // Location permissions on device
-        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+		const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
         if (status !== "granted") {
             this.setState({
@@ -165,11 +191,12 @@ export default class SignUp extends React.Component {
 					placeholder="Name"
 					style={styles.textInput}
 					onChangeText={name => this.setState({ name })}
-				/><TextInput
+				/>
+				<TextInput
 				placeholder="Phone Number"
 				style={styles.textInput}
 				onChangeText={phone => this.setState({ phone })}
-			/>
+				/>
 
                 <View style={styles.row}>
                     <Switch
@@ -182,17 +209,13 @@ export default class SignUp extends React.Component {
                 </View>
 
                 {this.state.isBusiness ? businessNameTextInput : null}
-                {this.state.isBusiness ? businessAddressTextInput : null}
 
                 <Button title="Sign Up" onPress={this.handleSignUp} />
                 <Button
                     title="Already have an account? Login"
                     onPress={() => this.props.navigation.navigate("Login")}
                 />
-                <Button
-                    title="Login via OTP"
-                    onPress={() => this.props.navigation.navigate("Otp")}
-                />
+
             </View>
         );
     }

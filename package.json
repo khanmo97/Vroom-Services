@@ -33,6 +33,8 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-dropdown-picker": "^3.7.0",
     "react-native-elements": "^2.3.2",
+    "react-native-geocoding": "^0.4.0",
+    "react-native-geolocation-service": "^5.0.0",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-loading-spinner-overlay": "^1.1.0",
     "react-native-paper": "^4.1.0",
@@ -46,6 +48,7 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.0",
     "react-navigation-drawer": "^2.5.0",
+    "react-number-format": "^4.4.1",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"

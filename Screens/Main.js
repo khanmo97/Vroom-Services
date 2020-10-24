@@ -27,7 +27,7 @@ export class Main extends Component {
 		{
 			return(
 				<View style={{justifyContent: 'center', flex: 1, alignItems: 'center'}}>
-					<Text>Hello</Text>
+					<Text>Hello, i'm in main</Text>
 				</View>
 			)
 		}

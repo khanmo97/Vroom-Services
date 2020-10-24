@@ -5,11 +5,22 @@ import {Colors, IconButton} from "react-native-paper";
 
 import firebase from 'firebase';
 import Carousel from "./Carousel";
+import {fetchUserServices} from "../Redux/Actions";
 //importing the carousel container here to use it to display services on search
 //this file is still in development
 
 require('firebase/firestore');
 //need fire base for pulling data
+
+
+function serviceView(services) {
+	if (services) {
+		return <Text>Nothing found</Text>
+	}
+	else {
+		return <Carousel data={services}/>
+	}
+}
 
 export default function Search() {
 	//this function is still in production and test mode
@@ -52,17 +63,6 @@ export default function Search() {
 			})
 	}
 
-	const serviceView = async (services) => {
-		if (services)
-		{
-			console.log("im in getserviceVewi");
-			return <Carousel data={services}/>
-		}
-		else
-		{
-			return <View><Text>No services posted</Text></View>
-		}
-	}
 
 	return(
 		// <View style={styles.parent}>
@@ -71,18 +71,8 @@ export default function Search() {
 		// </View>
 		// onSubmitEditing={(search) => fetchServices(search)}
 		<ScrollView style={styles.parent}>
-			<View style={styles.child1}>
-				<View style={styles.searchBar}>
-					<IconButton icon="magnify"/>
-					<TextInput placeholder="Search" style={styles.textInput}/>
-				</View>
-			</View>
-			<View style={styles.child2}>
-				<Carousel data={services}/>
-			</View>
-			<View style={styles.child3}>
-				<Text>Hello</Text>
-			</View>
+			<TextInput placeholder="Search" onChangeText={(search) => fetchServices(search)}/>
+			{serviceView(services)}
 		</ScrollView>
 
 
@@ -117,14 +107,15 @@ const styles = {
 	child1: {
 		flex: 2,
 		flexDirection: 'row',
-		justifyContent: 'flex-start'
+		justifyContent: 'flex-start',
+		alignSelf: 'center'
 	},
 	child2: {
 		flex: 4,
 	},
 	searchBar: {
 		flexDirection: 'row',
-		marginLeft: 10,
+		marginLeft: 35,
 		marginTop: 50
 	},
 	textInput: {

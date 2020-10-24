@@ -10,7 +10,7 @@ const CarouselService = ({item, navigation}) => {
 
 	return (
 		<View style = {styles.cardView}>
-			<TouchableRipple onPress={() => navigation.navigate('Service')}>
+			<TouchableRipple >
 			<Image style= {styles.image} source={{uri: item.downloadURL}}/>
 			</TouchableRipple>
 			<View style={styles.price}>
