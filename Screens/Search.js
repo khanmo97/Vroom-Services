@@ -11,8 +11,8 @@ export default function Search(props) {
 
 	const fetchUsers = (search) => {
 		firebase.firestore()
-			.collection('businesses')
-			.where('businessName', '>=', search)
+			.collection('users')
+			.where('name', '>=', search)
 			.get()
 			.then((snapshot) => {
 				let users = snapshot.docs.map(doc => {
@@ -36,7 +36,7 @@ export default function Search(props) {
 					<TouchableOpacity style={styles.button}
 						onPress={() => props.navigation.navigate("Profile", {uid: item.id})}>
 						<Icon name = "account-box"/>
-						<Text style={{marginHorizontal: 10}}>{item.businessName}</Text>
+						<Text style={{marginHorizontal: 10}}>{item.name}</Text>
 					</TouchableOpacity>
 
 				)}

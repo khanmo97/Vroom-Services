@@ -49,7 +49,7 @@ export default function SaveServiceImages( props) {
 		firebase.firestore()
 			.collection('Services')
 			.doc(firebase.auth().currentUser.uid)
-			.collection(serviceName)
+			.collection('serviceName')
 			.add({
 				downloadURL,
 				title,

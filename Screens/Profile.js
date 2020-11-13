@@ -12,7 +12,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from "react-redux";
 import Carousel from "./Carousel";
 import * as firebase from "firebase";
+import TouchableOpacity from "react-native-web/src/exports/TouchableOpacity";
 require('firebase/firestore')
+import { useFocusEffect } from '@react-navigation/native';
+import {user} from '../Redux/Reducers/user';
 
 function serviceView(services) {
 	return <Carousel data={services}/>
@@ -29,6 +32,8 @@ function ProfileScreen(props) {
 
 		if (props.route.params.uid === firebase.auth().currentUser.uid) {
 			setUser(currentUser);
+			console.log("WORKS????");
+			console.log("SERVIES", services);
 			setUserServices(services);
 		}
 		else {
@@ -70,7 +75,6 @@ function ProfileScreen(props) {
 
 			<View style={styles.userInfoSection}>
 				<View style={{flexDirection: 'row', marginTop: 15}}>
-
 					<Avatar.Image
 						source={{uri: 'https://images.unsplash.com/photo-1579912891113-77a92510a9b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80'}}
 						size={80}
@@ -124,7 +128,12 @@ function ProfileScreen(props) {
 	);
 };
 
+const mapStateToProps = (store) => ({
+	currentUser: store.userState.currentUser,
+	services: store.userState.services
+})
 
+export default connect(mapStateToProps, null)(ProfileScreen)
 
 const styles = StyleSheet.create({
 	container: {
