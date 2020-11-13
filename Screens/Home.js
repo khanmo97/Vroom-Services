@@ -1,29 +1,32 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import * as Permissions from "expo-permissions";
-import * as Location from "expo-location";
-import * as Constants from "expo";
+import React, {useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
+import * as Constants from 'expo';
+import * as firebase from "firebase";
 
 export default class Home extends React.Component {
-    _isMounted = false;
-    state = {
-        location: null,
-        errorMessage: null,
-    };
 
-    componentDidMount() {
-        this._isMounted = false;
-    }
 
-    componentWillUnmount() {
-        this.isMounted = true;
-        this._getLocation().then((data) => {
-            if (this.isMounted) this.setState(data);
-        });
-        return () => {
-            this.isMounted = false;
-        };
-    }
+	_isMounted = false;
+	state = {
+		location: null,
+		errorMessage: null
+	}
+
+	componentDidMount() {
+		this._isMounted = false;
+	}
+
+
+	componentWillUnmount() {
+		this.isMounted = true;
+		this._getLocation().then(data =>
+		{
+			if (this.isMounted) this.setState(data);
+		});
+		return () => {this.isMounted = false};
+	}
 
     // get device permissions to get device location
     // save location
@@ -36,27 +39,27 @@ export default class Home extends React.Component {
             });
         }
 
-        let location = await Location.getCurrentPositionAsync({});
+		let location = await Location.getCurrentPositionAsync({});
 
-        this.setState({
-            location,
-        });
-    };
+		this.setState({
+			location
+		});
+	};
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>{JSON.stringify(this.state.location)}</Text>
-            </View>
-        );
-    }
+	render () {
+		return (
+			<View style={styles.container}>
+				<Text>{JSON.stringify(this.state.location)}</Text>
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "slategray",
-        alignItems: "center",
-        justifyContent: "center",
-    },
+	container: {
+		flex: 1,
+		backgroundColor: 'slategray',
+		alignItems: 'center',
+		justifyContent: 'center'
+	}
 });
