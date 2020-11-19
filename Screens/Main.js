@@ -16,6 +16,22 @@ import {event} from "react-native-reanimated";
 
 const BottomTab = createBottomTabNavigator();
 
+function businessView(currentUser)
+{
+	if (currentUser.businessName != undefined)
+	{
+		return (
+			<BottomTab.Screen name = "Add Service" component={AddService}
+							  options={{
+								  tabBarIcon: ({ color, size }) => (
+									  <MaterialCommunityIcons name="plus-network" color={color} size={20}/>
+								  )
+							  }}
+			/>
+		)
+	}
+}
+
 export class Main extends Component {
 	componentDidMount() {
 		this.props.fetchUser();
@@ -24,7 +40,7 @@ export class Main extends Component {
 
 	render() {
 		const { currentUser } = this.props;
-		// console.log("The currrent user is "+currentUser.name);
+		console.log("The currrent user is "+currentUser);
 		if (currentUser==undefined)
 		{
 			return(
@@ -35,13 +51,7 @@ export class Main extends Component {
 		}
 		return(
 			<BottomTab.Navigator>
-				<BottomTab.Screen name = "Service" component={Service}
-					options={{
-						tabBarIcon: ({ color, size }) => (
-							<MaterialCommunityIcons name="home" color={color} size={20}/>
-						)
-					}}
-				/>
+
 				<BottomTab.Screen name = "Search" component={Search}
 					options={{
 						tabBarIcon: ({ color, size }) => (
@@ -49,6 +59,7 @@ export class Main extends Component {
 						)
 					}}
 				/>
+				{businessView(currentUser)}
 				<BottomTab.Screen name = "Profile" component={Profile}
 					listeners={({ navigation }) => ({
 						tabPress: event => {
@@ -59,13 +70,6 @@ export class Main extends Component {
 					options={{
 						tabBarIcon: ({ color, size }) => (
 							<MaterialCommunityIcons name="account-box" color={color} size={20}/>
-						)
-					}}
-				/>
-				<BottomTab.Screen name = "Add Service" component={AddService}
-					options={{
-						tabBarIcon: ({ color, size }) => (
-							<MaterialCommunityIcons name="plus-network" color={color} size={20}/>
 						)
 					}}
 				/>

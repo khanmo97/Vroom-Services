@@ -12,15 +12,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from "react-redux";
 import Carousel from "./Carousel";
 import * as firebase from "firebase";
+import Geocoder from 'react-native-geocoding';
 import TouchableOpacity from "react-native-web/src/exports/TouchableOpacity";
 require('firebase/firestore')
 import { useFocusEffect } from '@react-navigation/native';
 import {user} from '../Redux/Reducers/user';
-
+//Geo coder api key = AIzaSyDluMF-kVg_RE8Vdu5UJLuFJvOpLENFa3U
 function serviceView(services) {
 	return <Carousel data={services}/>
 
 }
+
+Geocoder.init("AIzaSyDluMF-kVg_RE8Vdu5UJLuFJvOpLENFa3U")
+
 
 
 function ProfileScreen(props) {
@@ -64,15 +68,20 @@ function ProfileScreen(props) {
 
 		}
 	}, [props.route.params.uid])
-
+//console.log(user.location)
+// 	Geocoder.from(user.location)
+// 		.then(json => {
+// 			var addressComponent = json.results[0].address_components[0];
+// 			console.log(addressComponent);
+// 		})
+// 		.catch(error => console.warn(error));
 	if (user === null)
 	{
 		return <View><Text>No users as of now</Text></View>
 	}
-
+	console.log(user)
 	return (
 		<SafeAreaView style={styles.container}>
-
 			<View style={styles.userInfoSection}>
 				<View style={{flexDirection: 'row', marginTop: 15}}>
 					<Avatar.Image
@@ -83,7 +92,7 @@ function ProfileScreen(props) {
 						<Title style={[styles.title, {marginTop:15, marginBottom: 5}]}>{user.name}</Title>
 						<Caption style={styles.caption}>{user.email}</Caption>
 					</View>
-					<View style={{marginLeft: 125, flexDirection: 'row', alignItems: 'left'}}>
+					<View style={{marginLeft: 100, flexDirection: 'row'}}>
 						<TouchableRipple onPress={() => {firebase.auth().signOut().then(()=> console.log("user signed out now?"));}}>
 							<Icon name="close" color="#777777" size={30}/>
 						</TouchableRipple>

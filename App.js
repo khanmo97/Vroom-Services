@@ -177,6 +177,7 @@ export class App extends Component {
 						<Stack.Screen name="SaveServiceImages" component={SaveServiceImages} />
 						<Stack.Screen name="Service" component={Service} />
 						<Stack.Screen name="Search" component={Search} />
+						<Stack.Screen name="Home" component={Home} />
 					</Stack.Navigator>
 				</NavigationContainer>
 			</Provider>
