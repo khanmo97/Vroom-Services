@@ -125,7 +125,7 @@ function ProfileScreen(props) {
 					<Icon name="email" color="#777777" size={20}/>
 					<Text style={{color:"#777777", marginLeft: 20}}>{user.email}</Text>
 				</View>
-				<TouchableRipple onPress={() => {props.navigation.navigate("EditProfile")}}>
+				<TouchableRipple onPress={() => {props.navigation.navigate("EditProfile", {uid: firebase.auth().currentUser.uid})}}>
 					<View style={styles.row}>
 						<Icon name="pencil" color="#777777" size={20}/>
 						<Text style={{color:"#777777", marginLeft: 20}}>Edit profile</Text>
