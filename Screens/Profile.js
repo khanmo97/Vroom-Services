@@ -30,6 +30,7 @@ Geocoder.init("AIzaSyDluMF-kVg_RE8Vdu5UJLuFJvOpLENFa3U")
 function ProfileScreen(props) {
 	const [userServices, setUserServices] = useState([]);
 	const [user, setUser] = useState(null);
+	const [following, setFollowing] = useState(false);
 
 	useEffect(() => {
 		const { currentUser, services} = props;
@@ -68,13 +69,24 @@ function ProfileScreen(props) {
 
 		}
 	}, [props.route.params.uid])
-//console.log(user.location)
-// 	Geocoder.from(user.location)
-// 		.then(json => {
-// 			var addressComponent = json.results[0].address_components[0];
-// 			console.log(addressComponent);
-// 		})
-// 		.catch(error => console.warn(error));
+
+	const onFollow = () => {
+		firebase.firestore()
+			.collection("Following")
+			.doc(firebase.auth().currentUser.uid)
+			.collection("UserFollowing")
+			.doc(props.route.params.uid)
+			.set({})
+	}
+	const onUnfollow = () => {
+		firebase.firestore()
+			.collection("Following")
+			.doc(firebase.auth().currentUser.uid)
+			.collection("UserFollowing")
+			.doc(props.route.params.uid)
+			.delete({})
+	}
+
 	if (user === null)
 	{
 		return <View><Text>No users as of now</Text></View>
@@ -113,15 +125,15 @@ function ProfileScreen(props) {
 					<Icon name="email" color="#777777" size={20}/>
 					<Text style={{color:"#777777", marginLeft: 20}}>{user.email}</Text>
 				</View>
+				<TouchableRipple onPress={() => {props.navigation.navigate("EditProfile")}}>
+					<View style={styles.row}>
+						<Icon name="pencil" color="#777777" size={20}/>
+						<Text style={{color:"#777777", marginLeft: 20}}>Edit profile</Text>
+					</View>
+				</TouchableRipple>
 			</View>
 
 			<View style={styles.menuWrapper}>
-				<TouchableRipple onPress={() => {}}>
-					<View style={styles.menuItem}>
-						<Icon name="heart-outline" color="#FF6347" size={25}/>
-						<Text style={styles.menuItemText}>Your Favorites</Text>
-					</View>
-				</TouchableRipple>
 				<View style={styles.menuItemService}>
 					<Icon name="newspaper" color="#FF6347" size={25} style={{alignSelf: 'center'}}/>
 					<Text style={styles.menuItemText}>Posted Services</Text>

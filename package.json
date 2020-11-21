@@ -38,6 +38,7 @@
     "react-native-gesture-handler": "~1.6.0",
     "react-native-loading-spinner-overlay": "^1.1.0",
     "react-native-paper": "^4.1.0",
+    "react-native-phone-input": "^0.2.4",
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",

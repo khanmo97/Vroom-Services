@@ -19,6 +19,7 @@ import Login from "./Screens/Login";
 import Home from "./Screens/Home";
 import Service from "./Screens/Service";
 import Profile from "./Screens/Profile";
+import EditProfile from "./Screens/EditProfile"
 import Search from "./Screens/Search";
 import Main from "./Screens/Main";
 import SaveServiceImages from "./Screens/SaveServiceImages";
@@ -38,41 +39,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from "react-native-vector-icons/Ionicons";
 
 
-// import Otp from "./components/Phone/Otp";
-
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
-const ProfileStack = createStackNavigator();
-const ServiceStack = createStackNavigator();
 const SignupStack = createStackNavigator();
 
-const HomeStackScreen = ({navigation}) => (
-	<HomeStack.Navigator screenOptions={{
-		headerStyle: {
-			backgroundColor: '#1999e3'
-		},
-		headerTintColor: '#fff',
-		headerTitleStyle: {
-			fontWeight: 'bold'
-		}
-	}}>
-		<HomeStack.Screen
-			name="Home"
-			component={Home}
-			options={{title: 'Home',
-				headerLeft: () => (
-					<Icon.Button name = "ios-menu"
-						size={25}
-						backgroundColor={'#1999e3'}
-						onPress={() => navigation.openDrawer()}>
-					</Icon.Button>
-				)}}
-			backgroundColor = 'teal'
-		/>
-	</HomeStack.Navigator>
-);
 
 const LoginStackScreen = ({navigation}) => (
 	<LoginStack.Navigator>
@@ -85,27 +56,6 @@ const LoginStackScreen = ({navigation}) => (
 	</LoginStack.Navigator>
 );
 
-const ProfileStackScreen = ({navigation}) => (
-	<ProfileStack.Navigator>
-		<ProfileStack.Screen
-			name = "Profile"
-			component = {Profile}
-			options={{title: 'Profile'}}
-			backgroundColor = '#003f5c'
-		/>
-	</ProfileStack.Navigator>
-);
-
-const ServiceStackScreen = ({navigation}) => (
-	<ServiceStack.Navigator>
-		<ServiceStack.Screen
-			name = "Service"
-			component = {Service}
-			options={{title: 'Service'}}
-			backgroundColor = '#003f5c'
-		/>
-	</ServiceStack.Navigator>
-);
 
 const SignupStackScreen = ({navigation}) => (
 	<SignupStack.Navigator>
@@ -178,6 +128,7 @@ export class App extends Component {
 						<Stack.Screen name="Service" component={Service} />
 						<Stack.Screen name="Search" component={Search} />
 						<Stack.Screen name="Home" component={Home} />
+						<Stack.Screen name="EditProfile" component={EditProfile} />
 					</Stack.Navigator>
 				</NavigationContainer>
 			</Provider>
@@ -192,29 +143,3 @@ const styles = StyleSheet.create({
 		color: '#FFF'
 	}
 });
-
-
-
-// export default function App() {
-// 	return (
-// 		<NavigationContainer>
-// 			<Drawer.Navigator initialRouteName="Home">
-// 				<Drawer.Screen name="Home" component={HomeStackScreen} />
-// 				<Drawer.Screen name="Login" component={LoginStackScreen}/>
-// 				<Drawer.Screen name="Profile" component={ProfileStackScreen} />
-// 				<Drawer.Screen name="Service" component={ServiceStackScreen} />
-// 				<Drawer.Screen name="Signup" component={SignupStackScreen} />
-// 			</Drawer.Navigator>
-// 		</NavigationContainer>
-// 		);
-//
-// }
-// <NavigationContainer>
-// 	<Drawer.Navigator initialRouteName="Home">
-// 		<Drawer.Screen name="Home" component={HomeStackScreen}/>
-// 		<Drawer.Screen name="Signup" component={SignupStackScreen}/>
-// 		<Drawer.Screen name="Login" component={LoginStackScreen}/>
-// 		<Drawer.Screen name="Profile" component={ProfileStackScreen}/>
-// 		<Drawer.Screen name="Service" component={ServiceStackScreen}/>
-// 	</Drawer.Navigator>
-// </NavigationContainer>

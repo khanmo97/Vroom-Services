@@ -1,5 +1,5 @@
 //@flow
-import {USER_SERVICES_STATE_CHANGE, USER_STATE_CHANGE} from "../Constants";
+import {USER_SERVICES_STATE_CHANGE, USER_STATE_CHANGE, CLEAR_DATA} from "../Constants";
 
 const initialState = {
 	currentUser: null,
@@ -17,6 +17,11 @@ export const user = (state = initialState, action) => {
 			return {
 				...state,
 				services: action.services
+			}
+		case CLEAR_DATA:
+			return {
+				currentUser: null,
+				services: []
 			}
 		default:
 			return state;

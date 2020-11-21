@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, StyleSheet, Image} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image, FlatList} from 'react-native';
 import {
 	Avatar,
 	Title,
@@ -32,8 +32,7 @@ function ProfileScreen(props) {
 		console.log("In home.js the current usert is "+currentUser.businessName)
 		if (props.route.params.uid === firebase.auth().currentUser.uid) {
 			setUser(currentUser);
-			console.log("WORKS????");
-			console.log("SERVIES", services);
+
 			setUserServices(services);
 		}
 		else {
@@ -69,7 +68,7 @@ function ProfileScreen(props) {
 	{
 		return <View><Text>No users as of now</Text></View>
 	}
-
+		console.log("The user services are" + userServices.downloadURL)
 	return (
 		<SafeAreaView style={styles.container}>
 
@@ -108,7 +107,7 @@ function ProfileScreen(props) {
 				</View>
 				<View>
 					<View>
-						{serviceView(userServices)}
+						{/*{serviceView(userServices)}*/}
 					</View>
 				</View>
 			</View>
@@ -127,6 +126,9 @@ export default connect(mapStateToProps, null)(ProfileScreen)
 const styles = StyleSheet.create({
 	container: {
 		flex: 1
+	}, image: {
+		flex: 1,
+		aspectRatio: 1 / 1
 	},
 	userInfoSection: {
 		paddingHorizontal: 30,
@@ -152,6 +154,10 @@ const styles = StyleSheet.create({
 		borderTopWidth: 1,
 		flexDirection: 'row',
 		height: 100
+	},
+	containerImage: {
+		flex: 1 / 3
+
 	},
 	infoBox: {
 		width: '50%',
