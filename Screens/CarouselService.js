@@ -1,7 +1,14 @@
 //@flow
 
 import React from 'react';
-import {View, StyleSheet, Text, Image, Dimensions} from 'react-native';
+import {
+	View,
+	StyleSheet,
+	Text,
+	Image,
+	Dimensions,
+	ScrollView
+} from 'react-native';
 import {TouchableRipple} from "react-native-paper";
 
 const { width, height} = Dimensions.get('window');
@@ -19,8 +26,10 @@ const CarouselService = ({item, navigation}) => {
 				</Text>
 			</View>
 			<View style={styles.textView}>
-				<Text style={styles.itemTitle}>{item.title}</Text>
-				<Text style={styles.itemDescription}>{item.description}</Text>
+				<ScrollView>
+					<Text style={styles.itemTitle}>{item.title}</Text>
+					<Text style={styles.itemDescription}>{item.description}</Text>
+				</ScrollView>
 			</View>
 		</View>
 	)
