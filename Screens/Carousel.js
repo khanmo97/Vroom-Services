@@ -6,10 +6,8 @@ import CarouselService from './CarouselService';
 
 const {width, height} = Dimensions.get('window');
 
-const Carousel = ({data}) => {
+const Carousel = ({data = []}) => {
 
-	if (data && data.length)
-	{
 		return (
 			<View>
 				<FlatList data={data}
@@ -27,7 +25,6 @@ const Carousel = ({data}) => {
 				/>
 			</View>
 		)
-	}
 
 }
 

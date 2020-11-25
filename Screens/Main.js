@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase'
@@ -44,8 +44,14 @@ export class Main extends Component {
 		if (currentUser==undefined)
 		{
 			return(
-				<View style={{justifyContent: 'center', flex: 1, alignItems: 'center'}}>
-					<Text>Hello, i'm in main</Text>
+				<View>
+					<ImageBackground
+						style={{
+							width: '100%',
+							height: '100%',
+							flex: 1
+						}}
+						source={require('../images/carwash.png')}/>
 				</View>
 			)
 		}

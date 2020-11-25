@@ -4,16 +4,17 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as firebase from "firebase";
 require('firebase/firestore')
 import { connect } from "react-redux";
+import * as navigation from "react-navigation";
 
 
 function EditProfileScreen(props) {
 
 
-	const [userName, setUserName] = useState(null);
-	const [userPhone, setUserPhone] = useState(null);
-	const [userEmail, setUserEmail] = useState(null);
-	const [businessName, setBusinesName] = useState(null);
 	const {currentUser} = props;
+	const [userName, setUserName] = useState(currentUser.name);
+	const [userPhone, setUserPhone] = useState(currentUser.phone);
+	const [userEmail, setUserEmail] = useState(currentUser.email);
+	const [businessName, setBusinesName] = useState(currentUser.businessName);
 
 
 
@@ -39,6 +40,8 @@ function EditProfileScreen(props) {
 			.then(() => {
 				console.log('User updated!');
 			})
+		props.navigation.navigate("Profile", firebase.auth().currentUser.uid)
+
 	}
 	return (
 		<SafeAreaView style={styles.container}>

@@ -16,9 +16,19 @@ import TouchableOpacity from "react-native-web/src/exports/TouchableOpacity";
 require('firebase/firestore')
 import { useFocusEffect } from '@react-navigation/native';
 import {user} from '../Redux/Reducers/user';
+import TextInput from "react-native-web/dist/exports/TextInput";
 
 function serviceView(services) {
-	return <Carousel data={services}/>
+
+	if (services === undefined)
+	{
+		return <View><Text>Failure</Text></View>
+	}
+	else
+	{
+		console.log("Hello services ", services)
+		return <Carousel data={services}/>
+	}
 
 }
 
@@ -51,6 +61,7 @@ function ProfileScreen(props) {
 			firebase.firestore()
 				.collection("Services")
 				.doc(props.route.params.uid)
+				.collection("serviceName")
 				.get()
 				.then((snapshot) => {
 					let services = snapshot.docs.map( doc => {
@@ -58,11 +69,12 @@ function ProfileScreen(props) {
 						const id = doc.id;
 						return { id, ...data}
 					})
+					console.log("do i get in here sservices ", services)
 					setUserServices(services);
 				})
 
 		}
-	}, [props.route.params.uid])
+	}, [])
 
 	if (user === null)
 	{
@@ -107,7 +119,7 @@ function ProfileScreen(props) {
 				</View>
 				<View>
 					<View>
-						{/*{serviceView(userServices)}*/}
+						<Carousel data={userServices}/>
 					</View>
 				</View>
 			</View>
