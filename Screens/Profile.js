@@ -70,23 +70,6 @@ function ProfileScreen(props) {
 		}
 	}, [props.route.params.uid])
 
-	const onFollow = () => {
-		firebase.firestore()
-			.collection("Following")
-			.doc(firebase.auth().currentUser.uid)
-			.collection("UserFollowing")
-			.doc(props.route.params.uid)
-			.set({})
-	}
-	const onUnfollow = () => {
-		firebase.firestore()
-			.collection("Following")
-			.doc(firebase.auth().currentUser.uid)
-			.collection("UserFollowing")
-			.doc(props.route.params.uid)
-			.delete({})
-	}
-
 	if (user === null)
 	{
 		return <View><Text>No users as of now</Text></View>

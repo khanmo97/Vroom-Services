@@ -30,16 +30,15 @@ const searchView = () => {
 
 function Search(props) {
 
-
 	const [user, setUser] = useState(null);
 	const [desireDistance, setDesireDistance] = useState(20)
 	const [users, setUsers] = useState([])
-
 	useEffect(() => {
 		const {currentUser} = props;
 		setUser(currentUser);
-		console.log("Do i get in useEffect() currentuser", currentUser.location.latitude);
 	}, []);
+
+	console.log("User is in search user is ", users)
 
 	const getDistance = (lat1, lon1, lat2, lon2) =>
 	{
@@ -54,6 +53,8 @@ function Search(props) {
 	}
 
 	const fetchUsers = (search) => {
+		console.log("Hey am ig eting in the fetchusers")
+		console.log(user.location.latitude, user.location.longitude)
 		firebase.firestore()
 			.collection('businesses')
 			.where('businessName', '>=', search)
@@ -65,13 +66,15 @@ function Search(props) {
 					console.log("The data is "+data.location.latitude+" and the id is "+ id);
 					console.log("The current user location is "+user.location.latitude);
 					let distance = getDistance(user.location.latitude, user.location.longitude, data.location.latitude, data.location.longitude)
-					console.log(distance);
+					console.log("The distance differfence is ", distance);
 					if (distance < desireDistance)
 					{
 						return { id, ...data }
 					}
+
 				});
 				setUsers(users);
+				console.log("Firebase users check ", users)
 			})
 	}
 	return (

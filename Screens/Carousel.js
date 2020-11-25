@@ -6,7 +6,7 @@ import CarouselService from './CarouselService';
 
 const {width, height} = Dimensions.get('window');
 
-const Carousel = ({data = []}) => {
+const Carousel = ({data = [], props}) => {
 
 		return (
 			<View>
@@ -20,7 +20,7 @@ const Carousel = ({data = []}) => {
 					decelerationRate={"fast"}
 					showsHorizontalScrollIndicator={false}
 					renderItem={ ({item}) =>{
-						return <CarouselService item = {item}/>
+						return <CarouselService item = {item} {...props} />
 					}}
 				/>
 			</View>

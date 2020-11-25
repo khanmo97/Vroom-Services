@@ -1,6 +1,6 @@
 //@flow
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
 	View,
 	StyleSheet,
@@ -10,16 +10,64 @@ import {
 	ScrollView
 } from 'react-native';
 import {TouchableRipple} from "react-native-paper";
+import * as firebase from "firebase";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width, height} = Dimensions.get('window');
 
-const CarouselService = ({item, navigation}) => {
+
+const CarouselService = ({item, props, navigation}) => {
+		console.log(props)
+		console.log("The item has this stuff ", item)
+		console.log("Tthe item id is ", item.id)
+		const [iconName, setIconName] = useState("heart-outline")
+		const [suid, setSuid] = useState("null")
+
+	useEffect( () => {
+		if (iconName === "heart")
+		{
+
+			firebase.firestore()
+				.collection("UserFavorites")
+				.doc(firebase.auth().currentUser.uid)
+				.collection('FavoritesSuid')
+				.doc(props.route.params.uid)
+				.add({
+					suid: item.id
+				}).then(r => {console.log("added??")})
+		}
+		else
+		{
+			firebase.firestore()
+				.collection("UserFavorites")
+				.doc(firebase.auth().currentUser.uid)
+				.collection('FavoritesSuid')
+				.doc(props.route.params.uid)
+				.delete().then(r => {console.log("am i in here in the delete")})
+		}
+
+	}, [item, iconName])
 
 	return (
 		<View style = {styles.cardView}>
 			<TouchableRipple >
 			<Image style= {styles.image} source={{uri: item.downloadURL}}/>
 			</TouchableRipple>
+			<View style={styles.favorite}>
+				<TouchableRipple onPress={() => {
+					if(iconName === "heart-outline")
+					{
+						setIconName("heart")
+					}
+					else {
+						setIconName("heart-outline")
+					}
+					setSuid(item.id)
+				}}>
+						<Icon name={iconName} color="#FF6347" size={25}/>
+				</TouchableRipple>
+			</View>
+
 			<View style={styles.price}>
 				<Text style={styles.itemTitle}>
 					$10
@@ -34,6 +82,10 @@ const CarouselService = ({item, navigation}) => {
 		</View>
 	)
 }
+const mapStateToProps = (store) => ({
+	currentUser: store.userState.currentUser,
+	services: store.userState.services
+})
 
 export default CarouselService;
 
@@ -56,6 +108,12 @@ const styles = StyleSheet.create({
 		top: 10,
 		margin: 10,
 		right: 5
+	},
+	favorite: {
+		position: 'absolute',
+		top: 10,
+		margin: 10,
+		left: 5
 	},
 	itemTitle: {
 		color: '#cde2e7',
