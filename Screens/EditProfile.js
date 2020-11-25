@@ -14,7 +14,7 @@ function EditProfileScreen(props) {
 	const [userName, setUserName] = useState(currentUser.name);
 	const [userPhone, setUserPhone] = useState(currentUser.phone);
 	const [userEmail, setUserEmail] = useState(currentUser.email);
-	const [businessName, setBusinesName] = useState(currentUser.businessName);
+	const [businessName, setBusinessName] = useState(currentUser.businessName);
 
 
 
@@ -47,7 +47,7 @@ function EditProfileScreen(props) {
 		<SafeAreaView style={styles.container}>
 			<View style={styles.userInfoSection}>
 				<View style={styles.row}>
-					<Icon name = "phone" size={20} style={{marginTop: 10}}/>
+					<Icon name = "phone" size={20} style={{marginTop: 7}}/>
 					<TextInput placeholder={"Phone number"} style={styles.menuItemText} onChangeText={userPhone => setUserPhone(userPhone)}>
 						{currentUser.phone}
 					</TextInput>
@@ -58,9 +58,19 @@ function EditProfileScreen(props) {
 						{currentUser.email}
 					</TextInput>
 				</View>
+				<View style={styles.row}>
+					<Text style={{marginLeft: 10, fontWeight: 'bold', }}>This does not change your sign in email</Text>
+				</View>
+				<View style={styles.row}>
+					<Icon name = "account" size={20} style={{marginTop: 10}}/>
+					<TextInput placeholder={"Name"} style={styles.menuItemText} onChangeText={userName => setUserName(userName)}>{currentUser.name}</TextInput>
+				</View>
+
 				<TouchableOpacity>
-					{/*<Icon name="save" color="#777777" size={20}/>*/}
-					<Button title="Save" onPress={() => updateUserInfo()} />
+					{/*<Icon name="s" color="#777777" size={20}/>*/}
+					<Button title="Save" onPress={() => updateUserInfo()} >
+						<Icon name = "send" size={20} />
+					</Button>
 				</TouchableOpacity>
 			</View>
 		</SafeAreaView>
@@ -105,5 +115,6 @@ const styles = StyleSheet.create({
 		fontWeight: '600',
 		fontSize: 16,
 		lineHeight: 26,
+		marginTop: 5
 	},
 })

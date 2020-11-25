@@ -57,8 +57,7 @@ export class Main extends Component {
 		}
 		return(
 			<BottomTab.Navigator>
-
-				<BottomTab.Screen name = "Search" component={Search}
+				<BottomTab.Screen name = "Search" component={(props) => <Search {...props} uid={firebase.auth().currentUser.uid} />}
 					options={{
 						tabBarIcon: ({ color, size }) => (
 							<MaterialCommunityIcons name="magnify" color={color} size={20}/>
