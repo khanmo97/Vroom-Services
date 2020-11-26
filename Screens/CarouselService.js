@@ -16,37 +16,28 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const { width, height} = Dimensions.get('window');
 
 
-const CarouselService = ({item, props, navigation}) => {
-		console.log(props)
+const CarouselService = ({item, navigation}) => {
+
 		console.log("The item has this stuff ", item)
 		console.log("Tthe item id is ", item.id)
 		const [iconName, setIconName] = useState("heart-outline")
-		const [suid, setSuid] = useState("null")
 
-	useEffect( () => {
-		if (iconName === "heart")
-		{
+	useEffect(() => {
+		fetchFavorites().then(snapshot => {
+			if (!snapshot.empty) {
+				setIconName('heart');
+			}
+		});
+	}, [])
 
-			firebase.firestore()
-				.collection("UserFavorites")
-				.doc(firebase.auth().currentUser.uid)
-				.collection('FavoritesSuid')
-				.doc(props.route.params.uid)
-				.add({
-					suid: item.id
-				}).then(r => {console.log("added??")})
-		}
-		else
-		{
-			firebase.firestore()
-				.collection("UserFavorites")
-				.doc(firebase.auth().currentUser.uid)
-				.collection('FavoritesSuid')
-				.doc(props.route.params.uid)
-				.delete().then(r => {console.log("am i in here in the delete")})
-		}
-
-	}, [item, iconName])
+	function fetchFavorites() {
+		return firebase.firestore()
+			.collection("UserFavorites")
+			.doc(firebase.auth().currentUser.uid)
+			.collection('FavoritesSuid')
+			.where("suid", "==", item.id)
+			.get();
+	}
 
 	return (
 		<View style = {styles.cardView}>
@@ -57,12 +48,20 @@ const CarouselService = ({item, props, navigation}) => {
 				<TouchableRipple onPress={() => {
 					if(iconName === "heart-outline")
 					{
-						setIconName("heart")
+						firebase.firestore()
+							.collection("UserFavorites")
+							.doc(firebase.auth().currentUser.uid)
+							.collection('FavoritesSuid')
+							.add({
+								suid: item.id
+							}).then(r => {setIconName("heart")});
 					}
 					else {
-						setIconName("heart-outline")
+						fetchFavorites().then(snapshot => {
+							snapshot.forEach(snap => snap.ref.delete());
+							setIconName("heart-outline");
+						});
 					}
-					setSuid(item.id)
 				}}>
 						<Icon name={iconName} color="#FF6347" size={25}/>
 				</TouchableRipple>
@@ -82,10 +81,6 @@ const CarouselService = ({item, props, navigation}) => {
 		</View>
 	)
 }
-const mapStateToProps = (store) => ({
-	currentUser: store.userState.currentUser,
-	services: store.userState.services
-})
 
 export default CarouselService;
 
