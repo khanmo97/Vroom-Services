@@ -21,6 +21,7 @@ import Service from "./Screens/Service";
 import Profile from "./Screens/Profile";
 import EditProfile from "./Screens/EditProfile"
 import Search from "./Screens/Search";
+import Comments from "./Screens/Comments";
 import Main from "./Screens/Main";
 import SaveServiceImages from "./Screens/SaveServiceImages";
 
@@ -126,6 +127,7 @@ export class App extends Component {
 						<Stack.Screen name="Main" component={Main} options={{headerShown: false}}/>
 						<Stack.Screen name="SaveServiceImages" component={SaveServiceImages} />
 						<Stack.Screen name="Service" component={Service} />
+						<Stack.Screen name="Comments" component={Comments} />
 						<Stack.Screen name="Search" component={Search} />
 						<Stack.Screen name="Home" component={Home} />
 						<Stack.Screen name="EditProfile" component={EditProfile} />

@@ -6,7 +6,7 @@ import CarouselService from './CarouselService';
 
 const {width, height} = Dimensions.get('window');
 
-const Carousel = ({data = []}) => {
+const Carousel = ({data = [], }) => {
 
 		return (
 			<View>

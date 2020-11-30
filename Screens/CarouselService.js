@@ -1,6 +1,8 @@
 //@flow
 
 import React, {useEffect, useState} from 'react';
+import StarRating from 'react-native-star-rating';
+
 import {
 	View,
 	StyleSheet,
@@ -12,15 +14,14 @@ import {
 import {TouchableRipple} from "react-native-paper";
 import * as firebase from "firebase";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from "@react-navigation/core";
 
 const { width, height} = Dimensions.get('window');
 
-
-const CarouselService = ({item, navigation}) => {
-
-		console.log("The item has this stuff ", item)
-		console.log("Tthe item id is ", item.id)
-		const [iconName, setIconName] = useState("heart-outline")
+const CarouselService = ({item}) => {
+	const navigation = useNavigation();
+	const [iconName, setIconName] = useState("heart-outline")
+	const [rating, setRating] = useState(3);
 
 	useEffect(() => {
 		fetchFavorites().then(snapshot => {
@@ -35,7 +36,7 @@ const CarouselService = ({item, navigation}) => {
 			.collection("UserFavorites")
 			.doc(firebase.auth().currentUser.uid)
 			.collection('FavoritesSuid')
-			.where("suid", "==", item.id)
+			.where("key", "==", item.key)
 			.get();
 	}
 
@@ -53,7 +54,7 @@ const CarouselService = ({item, navigation}) => {
 							.doc(firebase.auth().currentUser.uid)
 							.collection('FavoritesSuid')
 							.add({
-								suid: item.id
+								key: item.key,
 							}).then(r => {setIconName("heart")});
 					}
 					else {
@@ -66,10 +67,24 @@ const CarouselService = ({item, navigation}) => {
 						<Icon name={iconName} color="#FF6347" size={25}/>
 				</TouchableRipple>
 			</View>
-
+			<View style={styles.comments}>
+				<TouchableRipple onPress={() => {}}>
+					<Icon name="comment-outline" color="#FF6347" size={25}/>
+				</TouchableRipple>
+			</View>
+			<View style={styles.star}>
+				<StarRating
+					disabled={false}
+					maxStars={5}
+					rating={rating}
+					selectedStar={(ratings) => setRating(ratings)}
+					fullStarColor={'#de7c21'}
+					starSize={20}
+					/>
+			</View>
 			<View style={styles.price}>
 				<Text style={styles.itemTitle}>
-					$10
+					{"$"+item.servicePrice}
 				</Text>
 			</View>
 			<View style={styles.textView}>
@@ -108,7 +123,23 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		top: 10,
 		margin: 10,
-		left: 5
+		left: 5,
+		flexDirection: 'row',
+	},
+	comments: {
+		position: 'absolute',
+		top: 10,
+		margin: 10,
+		left: 5,
+		flexDirection: 'row',
+		marginLeft: 40
+	},
+	star: {
+		position: 'absolute',
+		top: 40,
+		margin: 10,
+		left: 5,
+		flexDirection: 'column',
 	},
 	itemTitle: {
 		color: '#cde2e7',

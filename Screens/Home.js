@@ -32,17 +32,6 @@ function serviceView(services) {
 
 }
 
-function favorite(suid) {
-	firebase.firestore()
-		.collection("UserFavorites")
-		.doc(firebase.auth().currentUser.uid)
-		.collection('FavoritesSuid')
-		.add({
-			suid
-		}).then(r => {})
-}
-
-
 function ProfileScreen(props) {
 	const [userServices, setUserServices] = useState([]);
 	const [user, setUser] = useState(null);

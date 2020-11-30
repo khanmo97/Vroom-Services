@@ -3,25 +3,15 @@ import React, {useState} from 'react';
 import { View, TextInput, Image, Button } from 'react-native';
 import firebase from 'firebase';
 import {Colors, IconButton} from "react-native-paper";
-import NumberFormat from 'react-number-format';
 
 require("firebase/firestore");
 require("firebase/firebase-storage")
 
 export default function SaveServiceImages( props) {
 	const [description, setDescription ] = useState("");
-	const [serviceName, setServiceName] = useState("");
+	const [servicePrice, setServicePrice] = useState("0");
 	const [title, setTitle] = useState("");
-	var NumberFormat = require('react-number-format');
 
-	// let servicesOffered = firebase.firestore().collection('Services').get()
-	// 	.then(snapshot => {
-	// 		snapshot
-	// 			.docs
-	// 			.forEach(doc=>{
-	// 				console.log(JSON.parse(doc._document.data.toString()))
-	// 			});
-	// 	});
 
 	const uploadPhoto = async () => {
 		const imageUri = props.route.params.photo;
@@ -45,16 +35,17 @@ export default function SaveServiceImages( props) {
 	}
 
 	const saveServiceData = (downloadURL) => {
-		console.log("Service name is "+serviceName);
 		firebase.firestore()
 			.collection('Services')
 			.doc(firebase.auth().currentUser.uid)
 			.collection('serviceName')
 			.add({
+				servicePrice,
 				downloadURL,
 				title,
 				description,
-				creation: firebase.firestore.FieldValue.serverTimestamp()
+				creation: firebase.firestore.FieldValue.serverTimestamp(),
+				key: (firebase.auth().currentUser.uid + '-' + (new Date().getTime()))
 			}).then((function () {
 				props.navigation.popToTop()
 			})).catch(e => console.log(e))
@@ -64,8 +55,8 @@ export default function SaveServiceImages( props) {
 		<View style={{flex: 1}}>
 			<Image source={{uri: props.route.params.photo}}/>
 			<TextInput style={styles.service}
-				placeholder="Service Name"
-				onChangeText={(serviceName) => setServiceName(serviceName)}
+				placeholder="Price"
+				onChangeText={(servicePrice) => setServicePrice(servicePrice)}
 			/>
 			<TextInput style={styles.service}
 				placeholder="Title"
