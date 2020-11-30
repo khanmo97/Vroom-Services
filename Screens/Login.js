@@ -11,6 +11,8 @@ import * as firebase from "firebase";
 import { AsyncStorage } from "react-native";
 import Profile from "./Profile";
 
+//cHECKING HELLO
+
 export default class Login extends React.Component {
 	state = { email: "", password: "", errorMessage: null };
 	handleLogin = () => {
