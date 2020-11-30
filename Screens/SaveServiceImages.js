@@ -1,6 +1,13 @@
 //@flow
 import React, {useState} from 'react';
-import { View, TextInput, Image, Button } from 'react-native';
+import {
+	View,
+	TextInput,
+	Image,
+	Button,
+	ImageBackground,
+	Text
+} from 'react-native';
 import firebase from 'firebase';
 import {Colors, IconButton} from "react-native-paper";
 
@@ -52,7 +59,13 @@ export default function SaveServiceImages( props) {
 	}
 
 	return (
-		<View style={{flex: 1}}>
+		<ImageBackground
+			blurRadius={10}
+			style={styles.background}
+			source={require("../images/car.jpg")}
+		>
+
+		<View style={styles.screen}>
 			<Image source={{uri: props.route.params.photo}}/>
 			<TextInput style={styles.service}
 				placeholder="Price"
@@ -64,78 +77,87 @@ export default function SaveServiceImages( props) {
 			/>
 			<TextInput style={styles.description}
 				placeholder="Description"
+				editable={true}
+				multiline={true}
 				onChangeText={(description) => setDescription(description)}
 			/>
-			<IconButton
-				style={{alignSelf: 'center'}}
-				icon="check"
-				color={Colors.red500}
-				size={26}
-				onPress={() => uploadPhoto()}
-			/>
+			<View style={styles.checkContainer}>
+				<IconButton
+					style={styles.check}
+					icon="check"
+					color={Colors.white}
+					size={26}
+					onPress={() => uploadPhoto()}
+				/>
+			</View>
+			<View style={styles.textContainer}>
+				<Text style={styles.text}>
+					Background from: https://artwallpaper.co/
+				</Text>
+			</View>
 		</View>
+		</ImageBackground>
 	)
 }
-
 const styles = {
-  background: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  check: {
-    alignSelf: "center",
-  },
-  checkContainer: {
-    width: 34,
-    height: 34,
-    backgroundColor: Colors.teal100,
-    justifyContent: "center",
-    alignSelf: "center",
-    alignContent: "center",
-    marginTop: 10,
-    borderRadius: 17,
-  },
-  screen: {
-    flex: 1,
-    paddingTop: 100,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    width: "100%",
-  },
-  service: {
-    alignSelf: "center",
-    alignContent: "center",
-    textAlign: "center",
-    fontWeight: "bold",
-    height: 40,
-    width: "90%",
-    backgroundColor: "white",
-    borderWidth: 0.5,
-    marginTop: 10,
-  },
-  description: {
-    alignSelf: "center",
-    fontWeight: "bold",
-    height: 200,
-    width: "90%",
-    backgroundColor: "white",
-    borderWidth: 0.5,
-    marginTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  textContainer: {
-    width: "100%",
-    height: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 0,
-  },
-  text: {
-    color: "white",
-    fontSize: 15,
-  },
-};
+	background: {
+		flex: 1,
+		justifyContent: "flex-end",
+		alignItems: "center",
+	},
+	check: {
+		alignSelf: "center",
+	},
+	checkContainer: {
+		width: 34,
+		height: 34,
+		backgroundColor: Colors.teal100,
+		justifyContent: "center",
+		alignSelf: "center",
+		alignContent: "center",
+		marginTop: 10,
+		borderRadius: 17,
+	},
+	screen: {
+		flex: 1,
+		paddingTop: 100,
+		paddingRight: 10,
+		paddingBottom: 10,
+		paddingLeft: 10,
+		width: "100%",
+	},
+	service: {
+		alignSelf: "center",
+		alignContent: "center",
+		textAlign: "center",
+		fontWeight: "bold",
+		height: 40,
+		width: "90%",
+		backgroundColor: "white",
+		borderWidth: 0.5,
+		marginTop: 10,
+	},
+	description: {
+		alignSelf: "center",
+		fontWeight: "bold",
+		height: 200,
+		width: "90%",
+		backgroundColor: "white",
+		borderWidth: 0.5,
+		marginTop: 10,
+		paddingLeft: 10,
+		paddingRight: 10,
+	},
+	textContainer: {
+		width: "100%",
+		height: 30,
+		justifyContent: "center",
+		alignItems: "center",
+		position: "absolute",
+		bottom: 0,
+	},
+	text: {
+		color: "white",
+		fontSize: 15,
+	},
+}
