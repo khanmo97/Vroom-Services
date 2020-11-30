@@ -78,25 +78,64 @@ export default function SaveServiceImages( props) {
 }
 
 const styles = {
-	service: {
-		alignSelf: 'center',
-		alignContent: 'center',
-		textAlign: 'center',
-		fontWeight: 'bold',
-		height: 40,
-		width: "90%",
-		borderColor: "gray",
-		borderWidth: .5,
-		marginTop: 8
-	},
-	description: {
-		alignSelf: 'center',
-		fontWeight: 'bold',
-		height: 100,
-		width: "90%",
-		borderColor: "gray",
-		borderWidth: .5,
-		marginTop: 8
-	}
-}
-
+  background: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  check: {
+    alignSelf: "center",
+  },
+  checkContainer: {
+    width: 34,
+    height: 34,
+    backgroundColor: Colors.teal100,
+    justifyContent: "center",
+    alignSelf: "center",
+    alignContent: "center",
+    marginTop: 10,
+    borderRadius: 17,
+  },
+  screen: {
+    flex: 1,
+    paddingTop: 100,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    width: "100%",
+  },
+  service: {
+    alignSelf: "center",
+    alignContent: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    height: 40,
+    width: "90%",
+    backgroundColor: "white",
+    borderWidth: 0.5,
+    marginTop: 10,
+  },
+  description: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    height: 200,
+    width: "90%",
+    backgroundColor: "white",
+    borderWidth: 0.5,
+    marginTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  textContainer: {
+    width: "100%",
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+  },
+  text: {
+    color: "white",
+    fontSize: 15,
+  },
+};
