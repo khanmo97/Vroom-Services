@@ -12,28 +12,79 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from "react-redux";
 import Carousel from "./Carousel";
 import * as firebase from "firebase";
-import TouchableOpacity from "react-native-web/src/exports/TouchableOpacity";
+import Geocoder from 'react-native-geocoding';
 require('firebase/firestore')
-import { useFocusEffect } from '@react-navigation/native';
-import {user} from '../Redux/Reducers/user';
+
 
 function serviceView(services) {
 	return <Carousel data={services}/>
 
 }
 
+Geocoder.init("AIzaSyDluMF-kVg_RE8Vdu5UJLuFJvOpLENFa3U")
+
+function PostedOrFavorites(userType)
+{
+	if (userType !== undefined)
+	{
+		return (
+			<View>
+				<View style={styles.menuItemService}>
+					<Icon name="newspaper" color="#FF6347" size={25} style={{alignSelf: 'center'}}/>
+					<Text style={styles.menuItemText}>Posted Services</Text>
+				</View>
+			</View>
+		)
+	}
+	else
+	{
+		return (
+			<View>
+				<View style={styles.menuItemService}>
+					<Icon name="heart" color="#FF6347" size={25} style={{alignSelf: 'center'}}/>
+					<Text style={styles.menuItemText}>Favorite Services</Text>
+				</View>
+			</View>
+		)
+	}
+
+}
 
 function ProfileScreen(props) {
 	const [userServices, setUserServices] = useState([]);
 	const [user, setUser] = useState(null);
+	const [following, setFollowing] = useState(false);
+
+	async function fetchFavorites() {
+		const favorites = await firebase.firestore()
+			.collection("UserFavorites")
+			.doc(firebase.auth().currentUser.uid)
+			.collection("FavoritesSuid")
+			.get();
+		const keys = favorites.docs.map(favorite => favorite.data().key);
+		console.log(keys);
+		const serviceSnapshot = await firebase.firestore()
+			.collectionGroup("serviceName")
+			.where("key", "in", keys)
+			.get();
+		const serviceData = serviceSnapshot.docs.map((service => {
+			return {
+				id: service.id,
+				...service.data()
+			}
+		}));
+		setUserServices(serviceData);
+	}
+
+	useEffect(() => {
+		fetchFavorites();
+	}, []);
 
 	useEffect(() => {
 		const { currentUser, services} = props;
 
 		if (props.route.params.uid === firebase.auth().currentUser.uid) {
 			setUser(currentUser);
-			console.log("WORKS????");
-			console.log("SERVIES", services);
 			setUserServices(services);
 		}
 		else {
@@ -49,18 +100,31 @@ function ProfileScreen(props) {
 						console.log("Wtf man in profile.js usereffect")
 					}
 				})
-			firebase.firestore()
-				.collection("Services")
-				.doc(props.route.params.uid)
-				.get()
-				.then((snapshot) => {
-					let services = snapshot.docs.map( doc => {
-						const data = doc.data();
-						const id = doc.id;
-						return { id, ...data}
+			if (user.businessName !== undefined)
+			{
+				console.log("Hello am in user.businessName !== undefined")
+				firebase.firestore()
+					.collection("Services")
+					.doc(props.route.params.uid)
+					.get()
+					.then((snapshot) => {
+						let services = snapshot.docs.map( doc => {
+							const data = doc.data();
+							const id = doc.id;
+							return { id, ...data}
+						})
+						setUserServices(services);
 					})
-					setUserServices(services);
-				})
+			}
+			else
+				{
+					firebase.firestore()
+						.collection("UserFavorites")
+						.doc(props.route.params.uid)
+						.get()
+						.then(() => {console.log("Hellooo", props.route.params.uid)})
+
+				}
 
 		}
 	}, [props.route.params.uid])
@@ -69,10 +133,9 @@ function ProfileScreen(props) {
 	{
 		return <View><Text>No users as of now</Text></View>
 	}
-
+	console.log(user);
 	return (
 		<SafeAreaView style={styles.container}>
-
 			<View style={styles.userInfoSection}>
 				<View style={{flexDirection: 'row', marginTop: 15}}>
 					<Avatar.Image
@@ -83,7 +146,7 @@ function ProfileScreen(props) {
 						<Title style={[styles.title, {marginTop:15, marginBottom: 5}]}>{user.name}</Title>
 						<Caption style={styles.caption}>{user.email}</Caption>
 					</View>
-					<View style={{marginLeft: 125, flexDirection: 'row', alignItems: 'left'}}>
+					<View style={{marginLeft: 100, flexDirection: 'row'}}>
 						<TouchableRipple onPress={() => {firebase.auth().signOut().then(()=> console.log("user signed out now?"));}}>
 							<Icon name="close" color="#777777" size={30}/>
 						</TouchableRipple>
@@ -104,19 +167,16 @@ function ProfileScreen(props) {
 					<Icon name="email" color="#777777" size={20}/>
 					<Text style={{color:"#777777", marginLeft: 20}}>{user.email}</Text>
 				</View>
+				<TouchableRipple onPress={() => {props.navigation.navigate("EditProfile", {uid: firebase.auth().currentUser.uid})}}>
+					<View style={styles.row}>
+						<Icon name="pencil" color="#777777" size={20}/>
+						<Text style={{color:"#777777", marginLeft: 20}}>Edit profile</Text>
+					</View>
+				</TouchableRipple>
 			</View>
 
 			<View style={styles.menuWrapper}>
-				<TouchableRipple onPress={() => {}}>
-					<View style={styles.menuItem}>
-						<Icon name="heart-outline" color="#FF6347" size={25}/>
-						<Text style={styles.menuItemText}>Your Favorites</Text>
-					</View>
-				</TouchableRipple>
-				<View style={styles.menuItemService}>
-					<Icon name="newspaper" color="#FF6347" size={25} style={{alignSelf: 'center'}}/>
-					<Text style={styles.menuItemText}>Posted Services</Text>
-				</View>
+				{PostedOrFavorites(user.businessName)}
 				<View>
 					<View>
 						{serviceView(userServices)}

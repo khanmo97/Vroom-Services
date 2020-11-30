@@ -1,13 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import { StyleSheet, Text, TextInput, View, Button, ScrollView } from "react-native";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { AsyncStorage } from "react-native";
 import { Checkbox, Switch } from "react-native-paper";
 import Geocoder from 'react-native-geocoding';
+import PhoneInput from 'react-native-phone-input'
+
 
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
+import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 
 let apiKey = 'AIzaSyDluMF-kVg_RE8Vdu5UJLuFJvOpLENFa3U'
 
@@ -165,6 +168,7 @@ export default class SignUp extends React.Component {
             />
         );
         return (
+        	<ScrollView>
             <View style={styles.container}>
                 <Text>Sign Up</Text>
                 {this.state.errorMessage && (
@@ -192,11 +196,7 @@ export default class SignUp extends React.Component {
 					style={styles.textInput}
 					onChangeText={name => this.setState({ name })}
 				/>
-				<TextInput
-				placeholder="Phone Number"
-				style={styles.textInput}
-				onChangeText={phone => this.setState({ phone })}
-				/>
+				<PhoneInput  style={styles.textInput} ref='phone' onChangePhoneNumber={phone => this.setState({phone})}/>
 
                 <View style={styles.row}>
                     <Switch
@@ -217,6 +217,7 @@ export default class SignUp extends React.Component {
                 />
 
             </View>
+			</ScrollView>
         );
     }
 }

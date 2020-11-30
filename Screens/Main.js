@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from 'firebase'
@@ -16,6 +16,22 @@ import {event} from "react-native-reanimated";
 
 const BottomTab = createBottomTabNavigator();
 
+function businessView(currentUser)
+{
+	if (currentUser.businessName != undefined)
+	{
+		return (
+			<BottomTab.Screen name = "Add Service" component={AddService}
+							  options={{
+								  tabBarIcon: ({ color, size }) => (
+									  <MaterialCommunityIcons name="plus-network" color={color} size={20}/>
+								  )
+							  }}
+			/>
+		)
+	}
+}
+
 export class Main extends Component {
 	componentDidMount() {
 		this.props.fetchUser();
@@ -24,31 +40,31 @@ export class Main extends Component {
 
 	render() {
 		const { currentUser } = this.props;
-		// console.log("The currrent user is "+currentUser.name);
+		console.log("The currrent user is "+currentUser);
 		if (currentUser==undefined)
 		{
 			return(
-				<View style={{justifyContent: 'center', flex: 1, alignItems: 'center'}}>
-					<Text>Hello, i'm in main</Text>
+				<View>
+					<ImageBackground
+						style={{
+							width: '100%',
+							height: '100%',
+							flex: 1
+						}}
+						source={require('../images/carwash.png')}/>
 				</View>
 			)
 		}
 		return(
 			<BottomTab.Navigator>
-				<BottomTab.Screen name = "Service" component={Service}
-					options={{
-						tabBarIcon: ({ color, size }) => (
-							<MaterialCommunityIcons name="home" color={color} size={20}/>
-						)
-					}}
-				/>
-				<BottomTab.Screen name = "Search" component={Search}
+				<BottomTab.Screen name = "Search" component={(props) => <Search {...props} uid={firebase.auth().currentUser.uid} />}
 					options={{
 						tabBarIcon: ({ color, size }) => (
 							<MaterialCommunityIcons name="magnify" color={color} size={20}/>
 						)
 					}}
 				/>
+				{businessView(currentUser)}
 				<BottomTab.Screen name = "Profile" component={Profile}
 					listeners={({ navigation }) => ({
 						tabPress: event => {
@@ -59,13 +75,6 @@ export class Main extends Component {
 					options={{
 						tabBarIcon: ({ color, size }) => (
 							<MaterialCommunityIcons name="account-box" color={color} size={20}/>
-						)
-					}}
-				/>
-				<BottomTab.Screen name = "Add Service" component={AddService}
-					options={{
-						tabBarIcon: ({ color, size }) => (
-							<MaterialCommunityIcons name="plus-network" color={color} size={20}/>
 						)
 					}}
 				/>
