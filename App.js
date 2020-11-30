@@ -21,6 +21,7 @@ import Service from "./Screens/Service";
 import Profile from "./Screens/Profile";
 import EditProfile from "./Screens/EditProfile"
 import Search from "./Screens/Search";
+import ForgotPassword from "./Screens/ForgotPassword"
 import Comments from "./Screens/Comments";
 import Main from "./Screens/Main";
 import SaveServiceImages from "./Screens/SaveServiceImages";
@@ -115,6 +116,7 @@ export class App extends Component {
 					<Drawer.Navigator initialRouteName="Landing">
 						<Drawer.Screen name="Signup" component={SignupStackScreen}/>
 						<Drawer.Screen name="Login" component={LoginStackScreen}/>
+						<Drawer.Screen name="ForgotPassword" component={ForgotPassword}/>
 					</Drawer.Navigator>
 				</NavigationContainer>
 			);
