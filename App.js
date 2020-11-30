@@ -102,7 +102,7 @@ export class App extends Component {
 				<View style={{flex: 1, justifyContent: 'center'}}>
 					<Spinner
 						visible={loaded}
-						textContent={'Analyzing Tweets...'}
+						textContent={'Loading...'}
 					/>
 				</View>
 			)

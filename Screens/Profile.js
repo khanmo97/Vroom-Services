@@ -41,7 +41,7 @@ function PostedOrFavorites(userType)
 		return (
 			<View>
 				<View style={styles.menuItemService}>
-					<Icon name="newspaper" color="#FF6347" size={25} style={{alignSelf: 'center'}}/>
+					<Icon name="heart" color="#FF6347" size={25} style={{alignSelf: 'center'}}/>
 					<Text style={styles.menuItemText}>Favorite Services</Text>
 				</View>
 			</View>
