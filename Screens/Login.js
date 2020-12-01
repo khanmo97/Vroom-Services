@@ -3,13 +3,13 @@ import {
     StyleSheet,
     Text,
     TextInput,
+	TouchableOpacity,
     View,
     Button,
     ImageBackground,
 } from "react-native";
 import * as firebase from "firebase";
-import { AsyncStorage } from "react-native";
-import Profile from "./Profile";
+
 
 export default class Login extends React.Component {
 	state = { email: "", password: "", errorMessage: null };
@@ -45,12 +45,18 @@ export default class Login extends React.Component {
 					onChangeText={password => this.setState({ password })}
 					value={this.state.password}
 				/>
-				<Button title="Login" onPress={this.handleLogin} />
-				<Button
-					title="Don't have an account? Sign Up"
-					onPress={() => this.props.navigation.navigate("Signup")}
-				/>
-				<Button title="Forogot Password?" onPress={() => this.props.navigation.navigate("ForgotPassword")}/>
+				<View style={styles.button}>
+					<Button title="Login" onPress={this.handleLogin} />
+				</View>
+				<View style={styles.button}>
+					<Button
+						title="Don't have an account? Sign Up"
+						onPress={() => this.props.navigation.navigate("Signup")}
+					/>
+				</View>
+				<View style={styles.button}>
+					<Button title="Forgot Password?" onPress={() => this.props.navigation.navigate("ForgotPassword")}/>
+				</View>
 			</View>
 		);
 	}
@@ -59,7 +65,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "center",
+		backgroundColor: "#ffffff"
 	},
 	textInput: {
 		height: 40,
@@ -67,5 +74,17 @@ const styles = StyleSheet.create({
 		borderColor: "gray",
 		borderWidth: 1,
 		marginTop: 8
-	}
+	},
+	image: {
+		flex: 1,
+		resizeMode: "cover",
+		justifyContent: "center"
+	},
+	button: {
+		textAlign: 'center',
+		marginVertical: 8,
+		backgroundColor: '#ffffff',
+		marginLeft: 70,
+		marginRight: 70,
+	},
 });

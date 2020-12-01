@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import * as firebase from "firebase";
 import Moment from 'moment';
-import {Button, Overlay} from 'react-native-elements';
+import {Button, Icon, Overlay} from 'react-native-elements';
 
 function Comments({route}) {
 	const {item} = route.params;
@@ -57,7 +57,7 @@ function Comments({route}) {
 		const createdDate = Moment(created.toDate()).format('MM/DD/YY hh:mm A');
 		return (
 			<View style={{borderWidth: 1, borderRadius: 10, padding: 10, borderColor: 'gray', flexDirection: 'row', marginTop: 5, marginBottom: 5}}>
-				<Image source={require('../images/Trump.jpg')} style={{height: 55, width: 55, margin: 5}} />
+				<Icon name="account-box" size={20}/>
 				<View style={{flexDirection: "column"}}>
 					<View style={{flexDirection: 'row'}}>
 						<Text style={{fontWeight: 'bold', marginRight: 10}}>{userEmail}</Text>
@@ -88,7 +88,7 @@ function Comments({route}) {
 					onPress={() => setShowAdd(true)}
 				/>
 			</View>
-			<Overlay isVisible={showAdd} onBackdropPress={() => setShowAdd(false)} overlayStyle={{width : '90%'}}>
+			<Overlay isVisible={showAdd} onBackdropPress={() => setShowAdd(false)} overlayStyle={{width : '90%', height: '80%'}}>
 				<Text>Comment:</Text>
 				<TextInput
 					autoFocus={true}
@@ -98,7 +98,7 @@ function Comments({route}) {
 					numberOfLines={10}
 					style={{height: 300, width: '90%', textAlignVertical: 'top'}}
 				/>
-				<Button title={"Save Comment"} onPress={addComment} style={{width: '90%'}} />
+				<Button title={"Save Comment"} onPress={addComment} style={{width: '90%', alignSelf: 'center'}} />
 			</Overlay>
 		</View>
 	);

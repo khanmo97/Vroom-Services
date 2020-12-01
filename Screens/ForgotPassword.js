@@ -27,8 +27,8 @@ export default class SignUp extends React.Component {
 	render()
 	{
 		return(
-			<SafeAreaView style={styles.container}>
-				<ImageBackground source={require('../images/lock.jpg')} style={styles.image}>
+			<View style={styles.container}>
+			<ImageBackground source={require('../images/lock.jpg')} style={styles.image}>
 				<View style={styles.emailHolder}>
 					<TextInput
 						style={styles.textInput}
@@ -55,9 +55,10 @@ export default class SignUp extends React.Component {
 						<Text>Image credits: https://unsplash.com/photos/bqGBbLq_yfc</Text>
 						<Text>Author: John Salvino</Text>
 					</View>
-				</ImageBackground>
-			</SafeAreaView>
-			)
+			</ImageBackground>
+			</View>
+
+		)
 
 	}
 
@@ -68,7 +69,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	emailHolder: {
-		marginTop: 50,
+		marginTop: 10,
+		backgroundColor: 'white'
 	},
 	textInput: {
 		height: 40,
@@ -80,6 +82,11 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		marginTop: 10,
+		textAlign: 'center',
+		marginVertical: 8,
+		backgroundColor: '#f57153',
+		marginLeft: 70,
+		marginRight: 70
 	},
 	image: {
 		flex: 1,
