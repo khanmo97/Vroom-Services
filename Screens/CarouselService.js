@@ -68,7 +68,7 @@ const CarouselService = ({item}) => {
 				</TouchableRipple>
 			</View>
 			<View style={styles.comments}>
-				<TouchableRipple onPress={() => {}}>
+				<TouchableRipple onPress={() => navigation.navigate('Comments', {item})}>
 					<Icon name="comment-outline" color="#FF6347" size={25}/>
 				</TouchableRipple>
 			</View>
