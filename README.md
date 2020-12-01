@@ -1,43 +1,26 @@
-### Hello  
+## How to Run
+1. Because vroomWash is built with the Expo framework you will need the Expo CLI tools in order to compile and run this application, these tools can be installed with `npm install --global expo-cli`.
+2. If you are wanting to run the application on your smartphone, download the Expo Client app.
+    - Apple App Store: https://apps.apple.com/us/app/expo-client/id982107779
+    - Google Play Store: https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US
+3. Clone the GitHub repository with `git clone https://github.com/khanmo97/3311-Team-3.git` if cloning through HTTPS
+4. Navigate into the project directory with `cd 3311-Team-3`
+5. Begin running the app with `npm start`, this will open the Expo DevTools on a browser window in which a QR code is displayed, this QR code is also displayed on the Terminal window and all Expo CLI tools are available to run the application on your computer.
+6. Scan the QR code with your smartphone camera and this should begin running the application on your smartphone.
 
-## Welcome to our project!  
-
-### This is a project for CSE3311 made by:  
+### CSE 3311 - Object Oriented Software Engineering Project by  
 - Mohammad Khan  
 - Bawi Thang  
-- Esau Enoya  
+- Esau Noya  
 - Linh Tran 
 - Robert Ellis  
 
-### We will be creating an application called VroomWash using React Native in this repository. This application will be able to provide customers and business owners the ability to make businesses with a simple click.  
+### vroomWash is an application built using the Expo framework for React Native, Redux, Firebase, and Firestore.
+### Main function of VroomWash: To enable customers to discover business detailing services in their area to hire.  
 
-### Main function of VroomWash: To enable customers and business owners to make business services  
 
-### There are six screens: 
-- SplashScreen  
-- Home  
-- Login  
-- SignUp  
-- Service  
-- Profile  
 
-### SplashScreen features:  
-  -  
-### Home Screen features:  
-  -  
-### Login Screen features:  
-  -  
-### SignUp Screen features:  
-  -  
-### Service Screen features:  
-  -  
-### Profile Screen featuers:   
-  -  
-  
-  
-  
-  
-  Credits:
+  Credits/Sources:
   https://rnfirebase.io/
   https://rnfirebase.io/firestore/usage
   https://stackoverflow.com/questions/59111866/error-invalid-hook-call-hooks-can-only-be-called-inside-of-the-body-of-a-funct
