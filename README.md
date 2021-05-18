@@ -1,12 +1,43 @@
-## How to Run
-1. Because vroomWash is built with the Expo framework you will need the Expo CLI tools in order to compile and run this application, these tools can be installed with `npm install --global expo-cli`.
-2. If you are wanting to run the application on your smartphone, download the Expo Client app.
-    - Apple App Store: https://apps.apple.com/us/app/expo-client/id982107779
-    - Google Play Store: https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US
-3. Clone the GitHub repository with `git clone https://github.com/khanmo97/3311-Team-3.git` if cloning through HTTPS
-4. Navigate into the project directory with `cd 3311-Team-3`
-5. Begin running the app with `npm start`, this will open the Expo DevTools on a browser window in which a QR code is displayed, this QR code is also displayed on the Terminal window and all Expo CLI tools are available to run the application on your computer.
-6. Scan the QR code with your smartphone camera and this should begin running the application on your smartphone.
+# Vroom Services
+## Platform for Mobile Service providers
+
+Vroom Services offer the users the ability to search for mobile service providers, and service providers to market better. Users can search for services within a desired approximate distance.
+
+- Become a Service Provider- register as a business
+- User- search for services
+
+## Features
+
+- Upload pictures of the service you provide
+- Customers can leave comments on the services you provide
+- Completely free
+- Data stored securely through Google's Cloud Firebase
+
+## Installation
+
+Vroom Services requires ReactNative & Expo CLI to run.
+
+To run the application, download Expo Client app:
+- App Store: https://apps.apple.com/us/app/expo-client/id982107779
+- Play Store: https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US
+
+```sh
+github clone https://github.com/khanmo97/Vroom-Services.git
+npm install
+npm start
+```
+## Adding Services
+
+![alt text](https://github.com/khanmo97/Vroom-Services/blob/master/AddService.jpeg?raw=true)
+
+## Home Page
+
+![alt text](https://github.com/khanmo97/Vroom-Services/blob/master/HomePage.jpeg?raw=true)
+
+
+## License
+
+MIT
 
 ### CSE 3311 - Object Oriented Software Engineering Project by  
 - Mohammad Khan  
@@ -16,7 +47,7 @@
 - Robert Ellis  
 
 ### vroomWash is an application built using the Expo framework for React Native, Redux, Firebase, and Firestore.
-### Main function of VroomWash: To enable customers to discover business detailing services in their area to hire.  
+
 
 
 
